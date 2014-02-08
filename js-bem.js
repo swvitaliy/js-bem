@@ -47,9 +47,14 @@
     return this;
   };
 
-  BemBlock.prototype.bind = function(elem, type, fn) {
+  BemBlock.prototype.bind = function(elem, mod, type, fn) {
+    if (typeof mod === 'string') {
+      fn = type;
+      type = mod;
+      mod = null;
+    }
     var block = this;
-    this.elem(elem)[type](function(ev) {
+    this.elem(elem, mod)[type](function(ev) {
       this._bemBlock = block;
       fn.apply(this, arguments);
     });
